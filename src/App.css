@@ -3,11 +3,14 @@
 }
 
 body {
-  background-color: rgb(227, 219, 219);
+  background-color: rgb(167, 230, 255);
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
 }
 
+
 .header-nav nav {
-  background-color: black;
+  background-color: rgb(5, 12, 156);
   height: 80px;
   color: white;
   display: flex;
@@ -40,7 +43,7 @@ body {
   min-height: 350px;
   background-color: aliceblue;
   border-radius: 15px;
-  border: 1px solid gray;
+  border: 1px solid rgb(167, 230, 255);
   margin: 15px auto;
 }
 
@@ -52,16 +55,17 @@ body {
   padding: 15px;
 }
 
-.login input[type="text"], .login input[type="submit"] {
+.login input[type="text"], .login input[type="submit"], .login input[type="password"] {
   display: block;
   margin: 10px auto;  /* Ajusta los márgenes para centrar */
   padding: 10px;
-  width: 50%;  /* Ajusta el ancho al 50% del contenedor */
+  width: 30%;  /* Ajusta el ancho al 50% del contenedor */
   box-sizing: border-box;
+  border-radius: 8px;
 }
 
 .login input[type="submit"] {
-  background-color: rgb(13, 99, 13);
+  background-color: rgb(53, 114, 239);
   color: white;
   border: none;
   cursor: pointer;
@@ -69,7 +73,7 @@ body {
 }
 
 .login input[type="submit"]:hover {
-  background-color: rgb(6, 117, 34);
+  background-color: rgb(58, 190, 249);
 }
 
 .logo {

@@ -20,10 +20,6 @@ export const Login = () => {
     setName(value);
   };
 
-  const handlePhoneChange = (e) => {
-    const value = e.target.value.replace(/[^0-9]/g, '');
-    setPhone(value);
-  };
 
   const saveData = (e) => {
     e.preventDefault();
@@ -37,28 +33,34 @@ export const Login = () => {
   };
 
   return (
+   
     <div>
-      <h1 className="text-center">Login</h1>
+      
+      
+      
+      <h1 className="text-center">Gestor de Proyectos</h1>
       <form className="login" onSubmit={saveData}>
         <input
           type="text"
           name="username"
-          placeholder="username"
+          placeholder="Usuario"
           value={username}
           onChange={handleUsernameChange}
           required
         />
         <input
-          type="text"
-          name="names"
-          placeholder="Name and LasName"
+          type="password"
+          name="password"
+          placeholder="Contraseña"
           value={name}
           onChange={handleNameChange}
           required
         />
-        <input type="text" name="phone" placeholder="Phone" value={phone} onChange={handlePhoneChange} required />
-        <input type="submit" value="Enviar" />
+        
+        <input type="submit" value="Iniciar Sesión" />
       </form>
+      
     </div>
+    
   );
 };

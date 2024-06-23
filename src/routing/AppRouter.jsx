@@ -6,10 +6,11 @@ import { Context } from '../context/Context';
 import { Home } from '../components/Home';
 import { Articles } from '../components/Articles';
 import { About } from '../components/About';
-import { Contact } from '../components/Contact';
+import { Projects } from '../components/Projects';
 import { NotFound } from '../components/NotFound';
 import { Login } from '../components/Login';
-
+import { Users } from '../components/Users';
+import { Activities} from '../components/Activities'
 import logo from '../assets/lotus.png';
 
 export const AppRouter = () => {
@@ -34,7 +35,13 @@ export const AppRouter = () => {
                 <NavLink to="/acerca-de">Acerca de</NavLink>
               </li>
               <li>
-                <NavLink to="/contacto">Contacto</NavLink>
+                <NavLink to="/proyectos">Proyectos</NavLink>
+              </li>
+              <li>
+                <NavLink to="/actividades">Actividades</NavLink>
+              </li>
+              <li>
+                <NavLink to="/usuarios">Usuarios</NavLink>
               </li>
               {user.hasOwnProperty('username') && user.username !== null ? (
                 <>
@@ -68,8 +75,10 @@ export const AppRouter = () => {
             <Route path="/inicio" element={<Home />}></Route>
             <Route path="/articulo" element={<Articles />}></Route>
             <Route path="/acerca-de" element={<About />}></Route>
-            <Route path="/contacto" element={<Contact />}></Route>
+            <Route path="/proyectos" element={<Projects />}></Route>
+            <Route path="/actividades" element={<Activities />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/usuarios" element={<Users />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </div>
