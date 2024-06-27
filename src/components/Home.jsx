@@ -9,6 +9,7 @@ export const Home = () => {
     <div>
       <h1>Página de Inicio</h1>
       <p>Hola Bienvenid@ <strong>{contextShare.user.username}</strong>, a mi tienda!!</p>
+      <p>Gestor de Proyectos</p>
     </div>
   )
 }

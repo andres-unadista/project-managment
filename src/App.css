@@ -15,8 +15,8 @@ body {
   color: white;
   display: flex;
   align-items: center;
-  padding-right: 25px;
-  padding-left: 25px;
+  padding-right: 35px;
+  padding-left: 35px;
 }
 
 .header-nav nav ul {
@@ -64,6 +64,16 @@ body {
   border-radius: 8px;
 }
 
+.login i {
+    display: block;
+   
+    align-items: center;
+    width: 50%;
+    position: relative;
+    top: 40px;
+    left: 100px;
+ }
+
 .login input[type="submit"] {
   background-color: rgb(53, 114, 239);
   color: white;
@@ -86,3 +96,22 @@ body {
   margin-right: 10px; /* Espacio entre la imagen y el texto */
 }
 
+
+
+@font-face {
+ 
+  font-family: 'Open Sans'; /* Puedes poner el nombre que quieras */
+  src: url('/src/assets/fonts/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype'); /* Cambia la ruta y el formato según corresponda */
+  /* Otros formatos de fuente si es necesario (woff, woff2, etc.) */
+}
+
+/* Ejemplo de uso de la fuente */
+body {
+  font-family: 'Open Sans', sans-serif; /* Usa el nombre definido arriba */
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}

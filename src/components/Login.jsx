@@ -5,8 +5,8 @@ export const Login = () => {
   const { setUser } = useContext(Context);
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
 
+ 
   const handleUsernameChange = (e) => {
     const value = e.target.value.replace(/\s+/g, '').toLowerCase();
     setUsername(value);
@@ -35,11 +35,9 @@ export const Login = () => {
   return (
    
     <div>
-      
-      
-      
-      <h1 className="text-center">Gestor de Proyectos</h1>
+      <h1 className="text-center">Iniciar Sesión</h1>
       <form className="login" onSubmit={saveData}>
+        <i class="fa-solid fa-user"></i>
         <input
           type="text"
           name="username"
@@ -48,18 +46,16 @@ export const Login = () => {
           onChange={handleUsernameChange}
           required
         />
-        <input
+          <i class="fa-solid fa-lock"></i><input
           type="password"
           name="password"
           placeholder="Contraseña"
           value={name}
           onChange={handleNameChange}
           required
-        />
-        
+        /> 
         <input type="submit" value="Iniciar Sesión" />
-      </form>
-      
+      </form>   
     </div>
     
   );
