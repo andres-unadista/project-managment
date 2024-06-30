@@ -15,6 +15,8 @@ function App() {
       <Context.Provider value={{ user, setUser }}>
         <AppRouter />
       </Context.Provider>
+      
+
     </div>
   );
 }

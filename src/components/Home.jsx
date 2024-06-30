@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from '../context/Context'
-
+import logo from "../assets/project_managment.jpg";
 export const Home = () => {
 
   const contextShare = useContext(Context);
@@ -8,7 +8,10 @@ export const Home = () => {
   return (
     <div>
       <h1>Página de Inicio</h1>
-      <p>Hola Bienvenid@ <strong>{contextShare.user.username}</strong>, a mi tienda!!</p>
+      <p>Gestor de Proyectos</p>
+      <div className="logo">
+              <img src={logo} alt="logo" />
+            </div>
     </div>
   )
 }

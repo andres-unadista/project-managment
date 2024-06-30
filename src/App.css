@@ -3,17 +3,20 @@
 }
 
 body {
-  background-color: rgb(227, 219, 219);
+  background-color: white;
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
 }
 
+
 .header-nav nav {
-  background-color: black;
+  background-color: rgb(167, 230, 255);
   height: 80px;
   color: white;
   display: flex;
   align-items: center;
-  padding-right: 25px;
-  padding-left: 25px;
+  padding-right: 35px;
+  padding-left: 35px;
 }
 
 .header-nav nav ul {
@@ -40,7 +43,7 @@ body {
   min-height: 350px;
   background-color: aliceblue;
   border-radius: 15px;
-  border: 1px solid gray;
+  border: 1px solid rgb(167, 230, 255);
   margin: 15px auto;
 }
 
@@ -52,16 +55,27 @@ body {
   padding: 15px;
 }
 
-.login input[type="text"], .login input[type="submit"] {
+.login input[type="email"], .login input[type="submit"], .login input[type="password"] {
   display: block;
   margin: 10px auto;  /* Ajusta los márgenes para centrar */
   padding: 10px;
-  width: 50%;  /* Ajusta el ancho al 50% del contenedor */
+  width: 30%;  /* Ajusta el ancho al 50% del contenedor */
   box-sizing: border-box;
+  border-radius: 8px;
 }
 
+.login i {
+    display: block;
+   
+    align-items: center;
+    width: 50%;
+    position: relative;
+    top: 40px;
+    left: 100px;
+ }
+
 .login input[type="submit"] {
-  background-color: rgb(13, 99, 13);
+  background-color: rgb(53, 114, 239);
   color: white;
   border: none;
   cursor: pointer;
@@ -69,7 +83,7 @@ body {
 }
 
 .login input[type="submit"]:hover {
-  background-color: rgb(6, 117, 34);
+  background-color: rgb(58, 190, 249);
 }
 
 .logo {
@@ -78,7 +92,26 @@ body {
 }
 
 .logo-img {
-  height: 80px; /* Ajusta el tamaño de la imagen */
+  height: 100px; /* Ajusta el tamaño de la imagen */
   margin-right: 10px; /* Espacio entre la imagen y el texto */
 }
 
+
+
+@font-face {
+ 
+  font-family: 'Open Sans'; /* Puedes poner el nombre que quieras */
+  src: url('/src/assets/fonts/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype'); /* Cambia la ruta y el formato según corresponda */
+  /* Otros formatos de fuente si es necesario (woff, woff2, etc.) */
+}
+
+/* Ejemplo de uso de la fuente */
+body {
+  font-family: 'Open Sans', sans-serif; /* Usa el nombre definido arriba */
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}

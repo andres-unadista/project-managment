@@ -1,64 +1,83 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context } from '../context/Context';
+import {login} from '../../src/services/usersService.js'
+
+
+
 
 export const Login = () => {
+  /*
+  useEffect(() => {
+    //Runs only on the first render
+    login();
+
+  }, []);
+  */
+
+  const access = (e) => {
+    e.preventDefault(); // Evitar que se actualice la pag
+    let identified_user = {
+      email: email,
+      password: password
+     
+    };
+    login(identified_user);
+    console.log(identified_user);
+  };
+  
+
   const { setUser } = useContext(Context);
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setUserEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleUsernameChange = (e) => {
+ 
+  const handleUserEmailChange = (e) => {
     const value = e.target.value.replace(/\s+/g, '').toLowerCase();
-    setUsername(value);
+    setUserEmail(value);
   };
 
-  const handleNameChange = (e) => {
-    const value = e.target.value
-      .split(' ')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-    setName(value);
+  const handlePasswordChange = (e) => {     
+      setPassword(e.target.value);
   };
 
-  const handlePhoneChange = (e) => {
-    const value = e.target.value.replace(/[^0-9]/g, '');
-    setPhone(value);
-  };
-
+/*
   const saveData = (e) => {
     e.preventDefault();
     let identified_user = {
       username: username,
-      name: name,
-      phone: phone,
+      password: password
+     
     };
     setUser(identified_user);
     console.log(identified_user);
   };
+  */
 
   return (
+   
     <div>
-      <h1 className="text-center">Login</h1>
-      <form className="login" onSubmit={saveData}>
+      <h1 className="text-center">Iniciar Sesión</h1>
+      <form className="login" onSubmit={access}>
+        
         <input
-          type="text"
-          name="username"
-          placeholder="username"
-          value={username}
-          onChange={handleUsernameChange}
+          type="email"
+          name="email"
+          placeholder="Correo"
+          value={email}
+          onChange={handleUserEmailChange}
           required
         />
         <input
-          type="text"
-          name="names"
-          placeholder="Name and LasName"
-          value={name}
-          onChange={handleNameChange}
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={handlePasswordChange}
           required
-        />
-        <input type="text" name="phone" placeholder="Phone" value={phone} onChange={handlePhoneChange} required />
-        <input type="submit" value="Enviar" />
-      </form>
+        /> 
+        <input type="submit" value="Iniciar Sesión" />
+      </form>   
     </div>
+    
   );
 };
