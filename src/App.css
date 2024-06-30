@@ -3,14 +3,14 @@
 }
 
 body {
-  background-color: rgb(167, 230, 255);
+  background-color: white;
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
 }
 
 
 .header-nav nav {
-  background-color: rgb(5, 12, 156);
+  background-color: rgb(167, 230, 255);
   height: 80px;
   color: white;
   display: flex;
@@ -55,7 +55,7 @@ body {
   padding: 15px;
 }
 
-.login input[type="text"], .login input[type="submit"], .login input[type="password"] {
+.login input[type="email"], .login input[type="submit"], .login input[type="password"] {
   display: block;
   margin: 10px auto;  /* Ajusta los márgenes para centrar */
   padding: 10px;
@@ -92,7 +92,7 @@ body {
 }
 
 .logo-img {
-  height: 80px; /* Ajusta el tamaño de la imagen */
+  height: 100px; /* Ajusta el tamaño de la imagen */
   margin-right: 10px; /* Espacio entre la imagen y el texto */
 }
 

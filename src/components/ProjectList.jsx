@@ -1,18 +1,17 @@
-import React, { useContext } from 'react'
-import { Context } from '../context/Context';
+import React, {useEffect} from 'react'
+import {project} from '../services/projectService.js'
 
-export const Activities = () => {
+export const ProjectList = () => {
 
-  //const {user} = useContext(Context);
-
-  return (
-    <div>
-      <h1>Página de actividades</h1>
-      <div class="d-flex justify-content-end">
-        <button type="button" className="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fa-solid fa-list-check"></i> Crear Actividades</button>
-      </div>
-
-      <table className="table">
+    useEffect(() => {
+        //Runs only on the first render
+        project();
+    
+    }, []);
+    return (
+        <div>
+            
+            <table className="table">
           <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
@@ -36,8 +35,6 @@ export const Activities = () => {
           </tbody>
         </table>
 
-      
-      
-  </div>
-  )
+        </div>
+    )
 }

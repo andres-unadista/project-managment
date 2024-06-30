@@ -1,18 +1,8 @@
-import React from 'react';
+import React from 'react'
+import {userlist} from '../services/usersService'
 
-function UserList({ users }) {
+export const UserList = () => {
   return (
-    <div>
-      <h2>Lista de Usuarios</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.username} ({user.email})
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    <div>UserList</div>
+  )
 }
-
-export default UserList;
