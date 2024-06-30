@@ -10,9 +10,9 @@ export const Projects = () => {
     <div>
     <h1>Lista de Proyectos</h1>
     <div className="d-flex justify-content-end">
-    <button type="button" className="btn btn-success text-start" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">   <i class="fa-solid fa-chart-line"></i>   Crear Proyectos</button>
+    <button type="button" className="btn btn-success text-start" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">   <i className="fa-solid fa-chart-line"></i>   Crear Proyectos</button>
     </div> 
-    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -22,7 +22,7 @@ export const Projects = () => {
           <div className="modal-body">
             <form>
               <div className="mb-3 text-start">
-                <label for="form-control" className="col-form-label fw-bold">Nombre del Proyecto</label>
+                <label htmlFor="form-control" className="col-form-label fw-bold">Nombre del Proyecto</label>
                 <input type="text" className="form-control" id="name"/>
               </div>
               <div className="row mb-3 text-start">
@@ -37,10 +37,9 @@ export const Projects = () => {
               </div>
               <div className="input-group mb-3">
                  <div className="input-group-prepend">
-                  <label className="input-group-text" for="inputGroupSelect01">Estado del Proyecto</label>
+                  <label className="input-group-text" htmlFor="inputGroupSelect01">Estado del Proyecto</label>
                   </div>
-                    <select className="custom-select" id="rol">
-                      <option selected>Seleccione Estado...</option>
+                    <select className="custom-select" id="rol" defaultValue={{ label: "Ejecución", value: 1 }}>
                       <option value="1">Ejecución</option>
                       <option value="2">Cancelado</option>
                       <option value="2">Finalizado</option>

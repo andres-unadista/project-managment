@@ -21,8 +21,8 @@ export const Login = () => {
       password: password
      
     };
-    login(identified_user);
-    console.log(identified_user);
+    login(e.target);
+    console.log(e.target);
   };
   
 
