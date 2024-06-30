@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Context } from '../context/Context';
 import { ProjectList } from './ProjectList';
 
 export const Projects = () => {
 
-  const {user} = useContext(Context);
+  //const {user} = useContext(Context);
 
   return (
     <div>

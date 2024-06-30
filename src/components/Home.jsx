@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Context } from '../context/Context'
 import logo from "../assets/project_managment.jpg";
 export const Home = () => {
 
-  const contextShare = useContext(Context);
+  //const contextShare = useContext(Context);
 
   return (
     <div>
