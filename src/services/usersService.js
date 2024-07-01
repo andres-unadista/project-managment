@@ -8,7 +8,7 @@ export const login = function (form) {
 
     const formData = new FormData(form); // Crea un objeto FormData con los datos del formulario
 
-    fetch('https://proyecto-api-2024.000webhostapp.com/api/login', {
+    fetch('http://jwt.local:8012/api/login', {
         method: 'POST',
         body: formData,
         headers: {
@@ -21,7 +21,7 @@ export const login = function (form) {
         })
         .then(data => {
             console.log('Respuesta recibida:', data);
-            localStorage.setItem("jwt", data.token);
+            localStorage.setItem("jwt", data.authorization.access_token);
             //setSessionStatus(true);
             // Aquí puedes manejar la respuesta como sea necesario
 
@@ -34,12 +34,12 @@ export const login = function (form) {
 }
 
 // Metodo para Listar Usuarios
-
+/*
 export const userlist = function () {
 
     const token = localStorage.getItem("jwt");
-    console.log(token);
-    fetch('https://proyecto-api-2024.000webhostapp.com/api/user/all', {
+    //console.log(token);
+    fetch('http://127.0.0.1:8000/api/user/all', {
         method: 'GET',
         headers: {
             Accept: "application/json",
@@ -58,3 +58,57 @@ export const userlist = function () {
             // Aquí puedes manejar errores de la solicitud
         });
 }
+*/
+export const userlist = async function () {
+    try {
+      const token = localStorage.getItem("jwt");
+  
+      const response = await fetch('http://jwt.local:8012/api/user/all', {
+        method: 'GET',
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Respuesta recibida:', data);
+      return data; // Devolvemos los datos obtenidos para que el componente los pueda usar
+    } catch (error) {
+      console.error('Error al obtener datos de usuarios:', error);
+      throw error; // Propagamos el error para que el componente lo pueda manejar
+    }
+  };
+  
+// 
+export const createUser = async function () {
+   /*
+    try {
+      const token = localStorage.getItem("jwt");
+  
+      const response = await fetch('http://127.0.0.1:8000/api/user/all', {
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Respuesta recibida:', data);
+      return data; // Devolvemos los datos obtenidos para que el componente los pueda usar
+    } catch (error) {
+      console.error('Error al obtener datos de usuarios:', error);
+      throw error; // Propagamos el error para que el componente lo pueda manejar
+    }
+      */
+  };
+
