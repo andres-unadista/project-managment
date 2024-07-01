@@ -1,47 +1,60 @@
 // Creacion de Funciones para el llamado de datos al Backend
+//import { useContext } from "react";
+import { SessionContext } from '../context/SessionContext';
 
-// Metodo para Login 
-export const login = function ({email,password}){
+export const login = function (form) {
 
-    
-        const url = "https://proyecto-api-2024.000webhostapp.com/api/login";
-        const options = {
-        method: "POST",
+    //  const { statusSession, setSessionStatus } = useContext(SessionContext);
+
+    const formData = new FormData(form); // Crea un objeto FormData con los datos del formulario
+
+    fetch('https://proyecto-api-2024.000webhostapp.com/api/login', {
+        method: 'POST',
+        body: formData,
         headers: {
             Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-        },
-        body: JSON.stringify({
-            email,
-            password
-        }),
-        };
-        fetch(url, options)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
+        }
+    })
+        .then(response => {
+            // Devuelve los datos de la respuesta como JSON
+            return response.json();
+        })
+        .then(data => {
+            console.log('Respuesta recibida:', data);
+            localStorage.setItem("jwt", data.token);
+            //setSessionStatus(true);
+            // Aquí puedes manejar la respuesta como sea necesario
+
+        })
+        .catch(error => {
+            console.error('Error al enviar datos:', error);
+            // Aquí puedes manejar errores de la solicitud
         });
 
-};
+}
 
 // Metodo para Listar Usuarios
-/*
-export const userlist = function ({email,password}){
 
-    
-    const url = "https://proyecto-api-2024.000webhostapp.com/api/user/all";
-    const options = {
-    method: "GET",
-    headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-    }
-    };
-    fetch(url, options)
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data);
-    });
+export const userlist = function () {
 
-};
-*/
+    const token = localStorage.getItem("jwt");
+    console.log(token);
+    fetch('https://proyecto-api-2024.000webhostapp.com/api/user/all', {
+        method: 'GET',
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .then(response => {
+            return response.json(); // Devuelve los datos de la respuesta como JSON
+        })
+        .then(data => {
+            console.log('Respuesta recibida:', data);
+            // Aquí puedes manejar la respuesta como sea necesario
+        })
+        .catch(error => {
+            console.error('Error al enviar datos:', error);
+            // Aquí puedes manejar errores de la solicitud
+        });
+}

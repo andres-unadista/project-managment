@@ -8,8 +8,8 @@ export const Activities = () => {
   return (
     <div>
       <h1>Página de actividades</h1>
-      <div class="d-flex justify-content-end">
-        <button type="button" className="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fa-solid fa-list-check"></i> Crear Actividades</button>
+      <div className="d-flex justify-content-end">
+        <button type="button" className="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i className="fa-solid fa-list-check"></i> Crear Actividades</button>
       </div>
 
       <table className="table">

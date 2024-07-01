@@ -1,8 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {userlist} from '../services/usersService'
 
 export const UserList = () => {
+
+  useEffect(() => {
+    
+    userlist();
+
+  }, []);
+
   return (
-    <div>UserList</div>
+    <div>
+      <p>Listado de Usuarios</p>
+    </div>
   )
 }
