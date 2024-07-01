@@ -13,6 +13,7 @@ import { Login } from "../components/Login";
 import { Users } from "../components/Users";
 import { Activities } from "../components/Activities";
 import logo from "../assets/project-managment.png";
+import { ProjectActivities } from "../components/ProjectActivities";
 //import { SessionContext } from "../context/SessionContext"
 
 export const AppRouter = () => {
@@ -44,6 +45,7 @@ export const AppRouter = () => {
                   <i className="fa-solid fa-chart-line"></i> Proyectos
                 </NavLink>
               </li>
+              
               <li>
                 <NavLink to="/actividades">
                   <i className="fa-solid fa-list-check"></i>Actividades
@@ -79,6 +81,7 @@ export const AppRouter = () => {
             <Route path="home" element={<Home />}></Route>
             <Route path="/inicio" element={<Home />}></Route>
             <Route path="/proyectos" element={<Projects />}></Route>
+            <Route path="/proy-acti" element={<ProjectActivities />}></Route>
             <Route path="/actividades" element={<Activities />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/usuarios" element={<Users />}></Route>
