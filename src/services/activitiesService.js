@@ -29,7 +29,7 @@ export const listActivities = async function () {
   // Servicio para Guardar Actividades por id de proyecto
 
   export const createActivity = async function (newActivity) {
-    console.log(newActivity);
+    //console.log(newActivity);
     try {
       const token = localStorage.getItem("jwt");
       const id_project = localStorage.getItem("id_project");

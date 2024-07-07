@@ -170,11 +170,7 @@ export const Users = () => {
         </div>
       </div>
       <UserList user={setUser} /> {/* Asumiendo que UserList se encarga de mostrar la lista de usuarios */}
-      {user ? (
-        <p>{user.name}</p>
-      ) : (
-        <p>{'User Null'}</p>
-      )}
+     
     </div>
   );
 };

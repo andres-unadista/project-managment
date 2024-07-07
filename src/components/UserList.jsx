@@ -75,7 +75,6 @@ export const UserList = (props) => {
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td><button type="button" className="btn btn-info" onClick={()=>abrirModal(user)}>Info</button></td>
-
               </tr>
             ))}
           </tbody>

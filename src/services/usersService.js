@@ -1,12 +1,8 @@
 // Creacion de Funciones para el llamado de datos al Backend
-//import { useContext } from "react";
+
 import { SessionContext } from '../context/SessionContext';
-//import Swal from '../../node_modules/sweetalert2/dist/sweetalert2'
-//import Swal from '../../node_modules/sweetalert2/dist/sweetalert2.all.js'
 import Swal from 'sweetalert2';
 export const login = function (form) {
-
-  //  const { statusSession, setSessionStatus } = useContext(SessionContext);
 
   const formData = new FormData(form); // Crea un objeto FormData con los datos del formulario
 
@@ -49,14 +45,17 @@ export const login = function (form) {
         }
       });
       
-
-      /*
-      setTimeout(() => {
-        window.location.href = '/*';
-      }, 1000);
-    */
     })
     .catch(error => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Usuario no autenticado!",
+        
+      });
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 3000);
       console.error('Error al enviar datos:', error);
       // Aquí puedes manejar errores de la solicitud
     });
@@ -64,31 +63,6 @@ export const login = function (form) {
 }
 
 // Metodo para Listar Usuarios
-/*
-export const userlist = function () {
-
-    const token = localStorage.getItem("jwt");
-    //console.log(token);
-    fetch('http://127.0.0.1:8000/api/user/all', {
-        method: 'GET',
-        headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`
-        }
-    })
-        .then(response => {
-            return response.json(); // Devuelve los datos de la respuesta como JSON
-        })
-        .then(data => {
-            console.log('Respuesta recibida:', data);
-            // Aquí puedes manejar la respuesta como sea necesario
-        })
-        .catch(error => {
-            console.error('Error al enviar datos:', error);
-            // Aquí puedes manejar errores de la solicitud
-        });
-}
-*/
 export const userlist = async function () {
   try {
     const token = localStorage.getItem("jwt");
@@ -116,7 +90,7 @@ export const userlist = async function () {
 
 // 
 export const createUser = async function (newUser) {
-  console.log(newUser);
+  //console.log(newUser);
   try {
     const token = localStorage.getItem("jwt");
     const formData = new FormData(newUser);
@@ -143,11 +117,11 @@ export const createUser = async function (newUser) {
 };
 // Actualizar 
 export const updateUser = async function (newUser, id_user) {
-  console.log(id_user);
+  //console.log(id_user);
   try {
     const token = localStorage.getItem("jwt");
     const formData = new FormData(newUser);
-    console.log(newUser);
+   // console.log(newUser);
     const response = await fetch('http://jwt.local:8012/api/user/edit/' + id_user, {
       method: 'POST',
       body: formData,

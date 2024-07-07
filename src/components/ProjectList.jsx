@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { project } from '../services/projectService';
 import {formateDate} from '../helpers/formateDate';
 
-export const ProjectList = () => {
+export const ProjectList = (props) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,6 +40,18 @@ export const ProjectList = () => {
       )
   }
 
+  const abrirModal = useCallback((project) => {
+    
+    console.log('proyecto clickeado',project);
+    props.project(project);
+    // Funcion para editar con Modal
+    const btnAbrirModal = document.getElementById('btnProject');
+     // Obtén una referencia al modal
+    btnAbrirModal.click();
+
+
+  }, []);
+
   return (
     <div>
        
@@ -73,7 +85,7 @@ export const ProjectList = () => {
                 <td>{statusproject(project.state)}</td>
                 
                 <td><button type="button" className="btn btn-info" onClick={()=>clickProject(project.id)}  >Info</button></td>
-                <td>Editar</td>
+                <td><button type="button" className="btn btn-info" onClick={()=>abrirModal(project)}>Editar</button></td>
                 <td>Eliminar</td>
               </tr>
             ))}

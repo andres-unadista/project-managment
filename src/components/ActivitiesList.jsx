@@ -48,7 +48,12 @@ const ActivitiesList = () => {
                     <td>{activity.name}</td>
                     <td>{formateDate(activity.date_start)}</td>
                     <td>{formateDate(activity.date_end)}</td>
-                    <td>{activity.state}</td>
+                    
+                    {activity.state == 1 ? (
+                      <td><i className="fa-solid fa-check"></i></td> 
+                    ) : (
+                      <td><i className="fa-solid fa-xmark"></i></td> 
+                    )}
                     <td><button type="button" className="btn btn-info">Info</button></td>
                     <td>Editar</td>
                     <td>Eliminar</td>
