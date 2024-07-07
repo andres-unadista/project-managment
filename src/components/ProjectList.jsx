@@ -21,14 +21,6 @@ export const ProjectList = () => {
 
     fetchProjects();
   }, []);
-/*
-  const showActivities = (id_project) =>{
-    
-    localStorage.setItem("id_project", id_project);
-    const project = localStorage.getItem("id_project");
-    console.log (project);
-  }
-    */
 
   const clickProject = useCallback((id_project) => {
     localStorage.setItem("id_project", id_project);
@@ -40,7 +32,7 @@ export const ProjectList = () => {
 
   return (
     <div>
-      
+       
 
       {loading ? (
         <p>Cargando proyectos...</p>

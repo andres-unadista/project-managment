@@ -22,7 +22,7 @@ export const UserList = () => {
 
   return (
     <div>
-      <h2>Lista de Usuarios</h2>
+     
 
       {loading ? (
         <p>Cargando usuarios...</p>

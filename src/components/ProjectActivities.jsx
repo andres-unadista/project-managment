@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {projectActivities} from '../services/projectService'
 import {formateDate} from '../helpers/formateDate'
- 
+import { userlist } from "../services/usersService";
+
 export const ProjectActivities = () => {
    
     const [activities, setActivities] = useState([]);
@@ -21,11 +22,112 @@ export const ProjectActivities = () => {
   
       fetchActivities();
     }, []);
+
+    // Listados de Usuarios
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+      const fetchUsers = async () => {
+        try {
+          const usersData = await userlist(); // Llamada al servicio para obtener la lista de usuarios
+          setUsers(usersData.users);
+        } catch (error) {
+          console.error("Error fetching users:", error);
+        }
+      };
+  
+      fetchUsers();
+    }, []);
     
 
   return (
     <div>
-      
+      <div className="d-flex justify-content-end">
+        <button
+          type="button"
+          className="btn btn-success text-start"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          data-bs-whatever="@mdo"
+        >
+          <i className="fa-solid fa-list-check"></i> Crear Actividades
+        </button>
+      </div>
+      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5 justify-content-end" id="exampleModalLabel">Crear Actividades</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="mb-3 text-start">
+                  <label htmlFor="name" className="col-form-label fw-bold">Nombre de la actividad</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                   
+                    required
+                  />
+                </div>
+                <div className="row mb-3 text-start">
+                  <div className="col-md-6">
+                    <label
+                      htmlFor="date_start"
+                      className="col-form-label fw-bold"
+                    >
+                      Fecha Inicial
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="date_start"
+                      id="date_start"
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label
+                      htmlFor="date_end"
+                      className="col-form-label fw-bold"
+                    >
+                      Fecha Final
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="date_end"
+                      id="date_end"
+                    />
+                  </div>
+                </div>
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <label className="input-group-text" htmlFor="projectState">
+                      Encargado de la Actividad
+                    </label>
+                  </div>
+                  <select className="custom-select" name="id_user" id="id_user">
+                    {users.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                <i className="fa-solid fa-rectangle-xmark"></i> Cerrar
+              </button>
+              <button type="button" className="btn btn-primary" >
+                <i className="fa-solid fa-floppy-disk"></i> Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {loading ? (
         <p>Cargando Actividades...</p>
