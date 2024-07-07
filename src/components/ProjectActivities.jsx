@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {projectActivities} from '../services/projectService'
 import {formateDate} from '../helpers/formateDate'
 import { userlist } from "../services/usersService";
+import {createActivity} from "../services/activitiesService";
 
 export const ProjectActivities = () => {
    
@@ -37,7 +38,22 @@ export const ProjectActivities = () => {
   
       fetchUsers();
     }, []);
-    
+
+    /// Servicio para guardar Actividades
+    const handleSaveActivity = (e) => {
+      e.preventDefault();
+      try {
+        
+        // Llamar al servicio para crear el proyecto en el backend
+        createActivity(e.target);
+        console.log(e.target);
+  
+        // Puedes implementar una función para recargar la lista de proyectos en ProjectList o usar un estado compartido si es necesario
+      } catch (error) {
+        console.error("Error al crear actividades:", error);
+        // Manejar el error apropiadamente, como mostrar un mensaje de error al usuario
+      }
+    };
 
   return (
     <div>
@@ -60,14 +76,14 @@ export const ProjectActivities = () => {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              <form>
+              <form onSubmit={handleSaveActivity}>
                 <div className="mb-3 text-start">
                   <label htmlFor="name" className="col-form-label fw-bold">Nombre de la actividad</label>
                   <input
                     type="text"
                     className="form-control"
                     id="name"
-                   
+                    name="name"
                     required
                   />
                 </div>
@@ -107,7 +123,7 @@ export const ProjectActivities = () => {
                       Encargado de la Actividad
                     </label>
                   </div>
-                  <select className="custom-select" name="id_user" id="id_user">
+                  <select className="custom-select" name="user_id" id="user_id">
                     {users.map((user) => (
                       <option key={user.id} value={user.id}>
                         {user.name}
@@ -115,16 +131,18 @@ export const ProjectActivities = () => {
                     ))}
                   </select>
                 </div>
-              </form>
-            </div>
-            <div className="modal-footer">
+              
+              <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                 <i className="fa-solid fa-rectangle-xmark"></i> Cerrar
               </button>
-              <button type="button" className="btn btn-primary" >
+              <button type="submit" className="btn btn-primary" >
                 <i className="fa-solid fa-floppy-disk"></i> Guardar
               </button>
             </div>
+            </form>
+            </div>
+            
           </div>
         </div>
       </div>

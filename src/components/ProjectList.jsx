@@ -30,6 +30,16 @@ export const ProjectList = () => {
 
   }, []);
 
+  const statusproject = (status) => {
+    let icons = {1: '<i class="fa-solid fa-arrow-right"></i>', 2: '<i class="fa-solid fa-ban"></i>',3: '<i class="fa-solid fa-check-to-slot"></i>' }
+
+      return (
+        <React.Fragment>
+          <div dangerouslySetInnerHTML={{ __html: icons[status] }} />
+        </React.Fragment>
+      )
+  }
+
   return (
     <div>
        
@@ -52,12 +62,16 @@ export const ProjectList = () => {
           </thead>
           <tbody>
             {projects.map((project, index) => (
+
+
+
               <tr key={project.id}>
                 <th scope="row">{index + 1}</th>
                 <td>{project.name}</td>
                 <td>{formateDate(project.date_start)}</td>
                 <td>{formateDate(project.date_end)}</td>
-                <td>{project.state}</td>
+                <td>{statusproject(project.state)}</td>
+                
                 <td><button type="button" className="btn btn-info" onClick={()=>clickProject(project.id)}  >Info</button></td>
                 <td>Editar</td>
                 <td>Eliminar</td>
