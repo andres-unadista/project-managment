@@ -113,14 +113,7 @@ export const updateProject = async function (updateProject, id) {
   //console.log(id);
   try {
     const token = localStorage.getItem("jwt");
-    const formData = new FormData(updateProject);  
-    const date_start = formData.get("date_start");
-    formData.set('date_start', formatDateToCustomFormat(date_start));
-  
-    const date_end = formData.get("date_end");
-    formData.set('date_end', formatDateToCustomFormat(date_end));
-  
-    //console.log(formData.get('date_start'),formData.get('date_end'));
+    const formData = new FormData(updateProject);
     const response = await fetch('http://jwt.local:8012/api/project/'+id, {
       method: 'POST',
       body: formData,

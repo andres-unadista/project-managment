@@ -1,4 +1,5 @@
 import {formatDateToCustomFormat} from '../helpers/formateDate';
+import Swal from 'sweetalert2';
 
 export const listActivities = async function () {
     try {
@@ -35,20 +36,7 @@ export const listActivities = async function () {
       const id_project = localStorage.getItem("id_project");
 
       const formData = new FormData(newActivity);
-      formData.append('id_project', id_project);
-
-      const date_start = formData.get("date_start");
-      //let fecha = new Date(date_start);
-      //let datetime = fecha.toISOString();
-      formData.set('date_start',formatDateToCustomFormat(date_start));
-
-      const date_end = formData.get("date_end");
-      //fecha = new Date(date_end);
-      //datetime = fecha.toISOString();
-      formData.set('date_end',formatDateToCustomFormat(date_end));
-    
-      
-
+      formData.append('id_project', id_project); 
       const response = await fetch('http://jwt.local:8012/api/activity', {
         method: 'POST',
         body: formData,
@@ -70,3 +58,58 @@ export const listActivities = async function () {
       throw error; // Propagamos el error para que el componente lo pueda manejar
     }
   };
+
+  /// Actualizar actividad
+  export const updateActivity = async function (updateActivity, id) {
+    //console.log(updateProject);
+    //console.log(id);
+    try {
+      const token = localStorage.getItem("jwt");
+      const formData = new FormData(updateActivity);  
+      const response = await fetch('http://jwt.local:8012/api/activity/'+id, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Respuesta recibida:', data);
+      Swal.fire({
+        title: 'Actualización',
+        text: '¡Actividad Actualizada!',
+        icon: 'success',
+        showCancelButton: false,
+        confirmButtonText: 'Sí, continuar',
+        //cancelButtonText: 'Cancelar'
+        
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Aquí capturas el evento de clic en el botón "OK" (confirmButtonText)
+  
+          console.log('Has hecho clic en "Sí, continuar"');
+          // Puedes ejecutar más código aquí después de hacer clic en "OK"
+          /*
+          setTimeout(() => {
+            window.location.href = '/proy-acti';
+          }, 1000);
+          */
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Has cancelado la acción');
+        }
+      });
+  
+  
+      return data; // Devolvemos los datos obtenidos para que el componente los pueda usar
+    } catch (error) {
+      console.error('Error al actualizar actividad:', error);
+      throw error; // Propagamos el error para que el componente lo pueda manejar
+    }
+  };
+  

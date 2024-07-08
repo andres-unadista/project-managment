@@ -1,59 +1,111 @@
-import React, { useEffect, useState } from 'react'
-import {projectActivities} from '../services/projectService'
-import {formateDate} from '../helpers/formateDate'
+import React, { useEffect, useState, useCallback } from 'react'
+import { projectActivities } from '../services/projectService'
+import { formateDate } from '../helpers/formateDate'
 import { userlist } from "../services/usersService";
-import {createActivity} from "../services/activitiesService";
+import { createActivity, updateActivity } from "../services/activitiesService";
+//import { DateFormat, formatDateToCustomFormat } from "../helpers/formateDate";
 
 export const ProjectActivities = () => {
-   
-    const [activities, setActivities] = useState([]);
-    const [loading, setLoading] = useState(true); // Estado para indicar si se están cargando los datos
-  
-    useEffect(() => {
-      const fetchActivities = async () => {
-        try {
-          const activitiesData = await projectActivities(); // Llamada al servicio para obtener la lista de usuarios
-          setActivities(activitiesData.activities); // Almacenar la lista de usuarios en el estado local
-          setLoading(false); // Cambiar el estado de carga a falso una vez que se han cargado los datos
-        } catch (error) {
-          console.error('Error activities for projects:', error);
-          setLoading(false); // También cambiar el estado de carga en caso de error
-        }
-      };
-  
-      fetchActivities();
-    }, []);
 
-    // Listados de Usuarios
-    const [users, setUsers] = useState([]);
-    useEffect(() => {
-      const fetchUsers = async () => {
-        try {
-          const usersData = await userlist(); // Llamada al servicio para obtener la lista de usuarios
-          setUsers(usersData.users);
-        } catch (error) {
-          console.error("Error fetching users:", error);
-        }
-      };
-  
-      fetchUsers();
-    }, []);
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(true); // Estado para indicar si se están cargando los datos
 
-    /// Servicio para guardar Actividades
-    const handleSaveActivity = (e) => {
-      e.preventDefault();
+  const [activity, setActivity] = useState(null);
+
+  useEffect(() => {
+    const fetchActivities = async () => {
       try {
-        
-        // Llamar al servicio para crear el proyecto en el backend
-        createActivity(e.target);
-        console.log(e.target);
-  
-        // Puedes implementar una función para recargar la lista de proyectos en ProjectList o usar un estado compartido si es necesario
+        const activitiesData = await projectActivities(); // Llamada al servicio para obtener la lista de usuarios
+        setActivities(activitiesData.activities); // Almacenar la lista de usuarios en el estado local
+        setLoading(false); // Cambiar el estado de carga a falso una vez que se han cargado los datos
       } catch (error) {
-        console.error("Error al crear actividades:", error);
-        // Manejar el error apropiadamente, como mostrar un mensaje de error al usuario
+        console.error('Error activities for projects:', error);
+        setLoading(false); // También cambiar el estado de carga en caso de error
       }
     };
+
+    fetchActivities();
+  }, []);
+
+  // Listados de Usuarios
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersData = await userlist(); // Llamada al servicio para obtener la lista de usuarios
+        setUsers(usersData.users);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  /// Servicio para guardar Actividades
+  const handleSaveActivity = (e) => {
+    //e.preventDefault();
+    try {
+
+      const form = document.getElementById('formActivity');
+      // Llamar al servicio para crear el proyecto en el backend
+      createActivity(form);
+
+
+      // Puedes implementar una función para recargar la lista de proyectos en ProjectList o usar un estado compartido si es necesario
+    } catch (error) {
+      console.error("Error al crear actividades:", error);
+      // Manejar el error apropiadamente, como mostrar un mensaje de error al usuario
+    }
+  };
+  // Servicio para actualizar actividad
+  const handleUpdateActivity = (e) => {
+    // e.preventDefault();
+    try {
+      const form = document.getElementById('formActivity');
+      // Llamar al servicio para crear el proyecto en el backend
+      updateActivity(form, activity.id_activity);
+      //console.log(e.target);
+
+      // Puedes implementar una función para recargar la lista de proyectos en ProjectList o usar un estado compartido si es necesario
+    } catch (error) {
+      console.error("Error al crear actividades:", error);
+      // Manejar el error apropiadamente, como mostrar un mensaje de error al usuario
+    }
+  };
+
+  // Limpiar Modal al cerrar
+  useEffect(() => {
+    var myModal = document.getElementById('exampleModal');
+    var myForm = document.getElementById('formActivity');
+    // Escuchar el evento de cierre del modal
+    myModal.addEventListener('hidden.bs.modal', function () {
+      // Limpiar los campos del formulario
+      setActivity(null);
+      myForm.querySelectorAll('input').forEach(input => {
+        input.value = ''; // Establecer el valor del input a una cadena vacía
+
+      });
+
+    });
+
+  }, []);
+
+  const abrirModal = useCallback((activity) => {
+
+    console.log('actividad clickeada', activity);
+    setActivity(activity);
+    console.log(activity);
+    //props.project(project);
+    // Funcion para editar con Modal
+    const btnAbrirModal = document.getElementById('btnActivity');
+    // Obtén una referencia al modal
+    btnAbrirModal.click();
+
+
+  }, []);
+
+
 
   return (
     <div>
@@ -64,19 +116,26 @@ export const ProjectActivities = () => {
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
           data-bs-whatever="@mdo"
+          id="btnActivity"
         >
-          <i className="fa-solid fa-list-check"></i> Crear Actividades
+          <i className="fa-solid fa-list-check"></i>Crear Actividades
         </button>
       </div>
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5 justify-content-end" id="exampleModalLabel">Crear Actividades</h1>
+              {activity ? (
+                <h1 className="modal-title fs-5 justify-content-end" id="exampleModalLabel">Editar Actividad</h1>
+              ) : (
+                <h1 className="modal-title fs-5 justify-content-end" id="exampleModalLabel">Crear Actividad</h1>
+              )}
+
+
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div className="modal-body">
-              <form onSubmit={handleSaveActivity}>
+            <div className="modal-body" >
+              <form id="formActivity">
                 <div className="mb-3 text-start">
                   <label htmlFor="name" className="col-form-label fw-bold">Nombre de la actividad</label>
                   <input
@@ -84,6 +143,10 @@ export const ProjectActivities = () => {
                     className="form-control"
                     id="name"
                     name="name"
+                    value={activity?.activity}
+                    onChange={(e)=>{
+                      setActivity({...activity,  activity: e.target.value})
+                    }}
                     required
                   />
                 </div>
@@ -100,6 +163,10 @@ export const ProjectActivities = () => {
                       className="form-control"
                       name="date_start"
                       id="date_start"
+                      value={activity? activity?.date_start: null }
+                      onChange={(e)=>{
+                        setActivity({...activity,  date_start: e.target.value})
+                      }}
                     />
                   </div>
                   <div className="col-md-6">
@@ -114,6 +181,10 @@ export const ProjectActivities = () => {
                       className="form-control"
                       name="date_end"
                       id="date_end"
+                      value={activity? activity?.date_end: null }
+                      onChange={(e)=>{
+                        setActivity({...activity,  date_end: e.target.value})
+                      }}
                     />
                   </div>
                 </div>
@@ -123,7 +194,10 @@ export const ProjectActivities = () => {
                       Encargado de la Actividad
                     </label>
                   </div>
-                  <select className="custom-select" name="user_id" id="user_id">
+                  <select className="custom-select" name="user_id" id="user_id" value={activity?.id_user}
+                  onChange={(e)=>{
+                    setActivity({...activity,  id_user: e.target.value})
+                  }}>
                     {users.map((user) => (
                       <option key={user.id} value={user.id}>
                         {user.name}
@@ -131,18 +205,25 @@ export const ProjectActivities = () => {
                     ))}
                   </select>
                 </div>
-              
-              <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                <i className="fa-solid fa-rectangle-xmark"></i> Cerrar
-              </button>
-              <button type="submit" className="btn btn-primary" >
-                <i className="fa-solid fa-floppy-disk"></i> Guardar
-              </button>
+
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                    <i className="fa-solid fa-rectangle-xmark"></i> Cerrar
+                  </button>
+
+                  {activity ? (
+                    <button type="button" className="btn btn-primary" onClick={handleUpdateActivity}>
+                      <i className="fa-solid fa-floppy-disk"></i> Actualizar
+                    </button>
+                  ) : (
+                    <button type="button" className="btn btn-primary" onClick={handleSaveActivity}>
+                      <i className="fa-solid fa-floppy-disk"></i> Guardar
+                    </button>
+                  )}
+                </div>
+              </form>
             </div>
-            </form>
-            </div>
-            
+
           </div>
         </div>
       </div>
@@ -159,8 +240,9 @@ export const ProjectActivities = () => {
               <th scope="col">Fecha Final</th>
               <th scope="col">Estado</th>
               <th scope="col">Responsable</th>
-             
-             
+              <th scope="col">Editar</th>
+
+
             </tr>
           </thead>
           <tbody>
@@ -171,15 +253,14 @@ export const ProjectActivities = () => {
                 <td>{formateDate(activity.date_start)}</td>
                 <td>{formateDate(activity.date_end)}</td>
                 {activity.state_activity == 1 ? (
-                  <td><i className="fa-solid fa-check"></i></td> 
+                  <td><i className="fa-solid fa-check"></i></td>
                 ) : (
-                  <td><i className="fa-solid fa-xmark"></i></td> 
+                  <td><i className="fa-solid fa-xmark"></i></td>
                 )}
-               
-                
                 <td>{activity.user_name}</td>
-               
-               
+                <td><button type="button" className="btn btn-info" onClick={() => abrirModal(activity)}>Editar</button></td>
+
+
               </tr>
             ))}
           </tbody>

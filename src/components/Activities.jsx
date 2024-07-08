@@ -9,8 +9,6 @@ export const Activities = () => {
   return (
     <div>
       <h1>Página de actividades</h1>
-      
-
      < ActivitiesList /> {/* Lista las Actividades*/}
     </div>
   )

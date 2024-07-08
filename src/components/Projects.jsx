@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ProjectList } from "./ProjectList";
 import { userlist } from "../services/usersService";
-import { DateFormat } from "../helpers/formateDate"
+//import { DateFormat } from "../helpers/formateDate"
 // Importa la función para crear proyecto desde tu servicio
 // Ajusta la importación según la ubicación real de tu servicio
 import { createProject, updateProject } from "../services/projectService";
@@ -147,7 +147,7 @@ export const Projects = () => {
                       className="form-control"
                       name="date_start"
                       id="date_start"
-                      value={project? DateFormat(project?.date_start): null }
+                      value={project? project?.date_start: null }
                       onChange={(e)=>{
                         setProject({...project,  date_start: e.target.value})
                       }}
@@ -165,7 +165,7 @@ export const Projects = () => {
                       className="form-control"
                       name="date_end"
                       id="date_end"
-                      value={project? DateFormat(project?.date_end): null }
+                      value={project? project?.date_end: null }
                       onChange={(e)=>{
                         setProject({...project,  date_end: e.target.value})
                       }}
@@ -189,7 +189,7 @@ export const Projects = () => {
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <label className="input-group-text" htmlFor="projectState">
-                      Listado de Usuarios
+                      Encargado del Proyecto
                     </label>
                   </div>
                   <select className="custom-select" name="id_user" id="id_user" value={project?.id_user} onChange={(e)=>{
