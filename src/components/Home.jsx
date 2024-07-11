@@ -10,7 +10,7 @@ export const Home = () => {
       <h1>Página de Inicio</h1>
       <p>Gestor de Proyectos</p>
       <div className="logo">
-              <img src={logo} alt="logo" />
+              
             </div>
     </div>
   )

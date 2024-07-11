@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { projectActivities } from '../services/projectService'
-import { formateDate } from '../helpers/formateDate'
+//import { formateDate } from '../helpers/formateDate'
 import { userlist } from "../services/usersService";
-import { createActivity, updateActivity } from "../services/activitiesService";
+import { createActivity, updateActivity, updateStateActivity } from "../services/activitiesService";
 //import { DateFormat, formatDateToCustomFormat } from "../helpers/formateDate";
+
+
+
 
 export const ProjectActivities = () => {
 
@@ -11,6 +14,8 @@ export const ProjectActivities = () => {
   const [loading, setLoading] = useState(true); // Estado para indicar si se están cargando los datos
 
   const [activity, setActivity] = useState(null);
+  const [formCreate, setformCreate] = useState(true); // 
+
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -82,6 +87,7 @@ export const ProjectActivities = () => {
     myModal.addEventListener('hidden.bs.modal', function () {
       // Limpiar los campos del formulario
       setActivity(null);
+      setformCreate(true);
       myForm.querySelectorAll('input').forEach(input => {
         input.value = ''; // Establecer el valor del input a una cadena vacía
 
@@ -95,6 +101,7 @@ export const ProjectActivities = () => {
 
     console.log('actividad clickeada', activity);
     setActivity(activity);
+    setformCreate(false);
     console.log(activity);
     //props.project(project);
     // Funcion para editar con Modal
@@ -104,6 +111,16 @@ export const ProjectActivities = () => {
 
 
   }, []);
+
+  const updateState = (id_activity,inputcheckbox)=>{
+
+    if(inputcheckbox.checked){
+      updateStateActivity(1,id_activity);
+    }else{
+      updateStateActivity(0,id_activity);
+    }
+
+  };
 
 
 
@@ -125,7 +142,7 @@ export const ProjectActivities = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              {activity ? (
+              {(activity && !formCreate) ? (
                 <h1 className="modal-title fs-5 justify-content-end" id="exampleModalLabel">Editar Actividad</h1>
               ) : (
                 <h1 className="modal-title fs-5 justify-content-end" id="exampleModalLabel">Crear Actividad</h1>
@@ -144,8 +161,8 @@ export const ProjectActivities = () => {
                     id="name"
                     name="name"
                     value={activity?.activity}
-                    onChange={(e)=>{
-                      setActivity({...activity,  activity: e.target.value})
+                    onChange={(e) => {
+                      setActivity({ ...activity, activity: e.target.value })
                     }}
                     required
                   />
@@ -163,9 +180,9 @@ export const ProjectActivities = () => {
                       className="form-control"
                       name="date_start"
                       id="date_start"
-                      value={activity? activity?.date_start: null }
-                      onChange={(e)=>{
-                        setActivity({...activity,  date_start: e.target.value})
+                      value={activity ? activity?.date_start : null}
+                      onChange={(e) => {
+                        setActivity({ ...activity, date_start: e.target.value })
                       }}
                     />
                   </div>
@@ -181,9 +198,9 @@ export const ProjectActivities = () => {
                       className="form-control"
                       name="date_end"
                       id="date_end"
-                      value={activity? activity?.date_end: null }
-                      onChange={(e)=>{
-                        setActivity({...activity,  date_end: e.target.value})
+                      value={activity ? activity?.date_end : null}
+                      onChange={(e) => {
+                        setActivity({ ...activity, date_end: e.target.value })
                       }}
                     />
                   </div>
@@ -195,9 +212,9 @@ export const ProjectActivities = () => {
                     </label>
                   </div>
                   <select className="custom-select" name="user_id" id="user_id" value={activity?.id_user}
-                  onChange={(e)=>{
-                    setActivity({...activity,  id_user: e.target.value})
-                  }}>
+                    onChange={(e) => {
+                      setActivity({ ...activity, id_user: e.target.value })
+                    }}>
                     {users.map((user) => (
                       <option key={user.id} value={user.id}>
                         {user.name}
@@ -211,7 +228,7 @@ export const ProjectActivities = () => {
                     <i className="fa-solid fa-rectangle-xmark"></i> Cerrar
                   </button>
 
-                  {activity ? (
+                  {(activity && !formCreate) ? (
                     <button type="button" className="btn btn-primary" onClick={handleUpdateActivity}>
                       <i className="fa-solid fa-floppy-disk"></i> Actualizar
                     </button>
@@ -238,9 +255,10 @@ export const ProjectActivities = () => {
               <th scope="col">Nombre Actividad</th>
               <th scope="col">Fecha Inicial</th>
               <th scope="col">Fecha Final</th>
-              <th scope="col">Estado</th>
+
               <th scope="col">Responsable</th>
               <th scope="col">Editar</th>
+              <th scope="col">Estado</th>
 
 
             </tr>
@@ -250,22 +268,38 @@ export const ProjectActivities = () => {
               <tr key={activity.id_activity}>
                 <th scope="row">{index + 1}</th>
                 <td>{activity.activity}</td>
-                <td>{formateDate(activity.date_start)}</td>
-                <td>{formateDate(activity.date_end)}</td>
-                {activity.state_activity == 1 ? (
-                  <td><i className="fa-solid fa-check"></i></td>
-                ) : (
-                  <td><i className="fa-solid fa-xmark"></i></td>
-                )}
-                <td>{activity.user_name}</td>
-                <td><button type="button" className="btn btn-info" onClick={() => abrirModal(activity)}>Editar</button></td>
+                <td>{activity.date_start}</td>
+                <td>{activity.date_end}</td>
 
+                <td>{activity.user_name}</td>
+                <td><button type="button" className="btn btn" onClick={() => abrirModal(activity)}><i className="fa-solid fa-pencil"></i></button></td>
+                {activity.state_activity == 1 ? (
+                  <td>
+                    <div className="form-check form-switch">
+                      <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+                        <input className="form-check-input" onChange={(e) =>updateState(activity.id_activity,e.target)} type="checkbox" id={'check-' + activity.id_activity} checked />
+                      </label>
+                    </div>
+                  </td>
+                  /*<td>
+                    <i className="fa-solid fa-check"></i></td>*/
+                ) : (
+                  <td>
+                    <div className="form-check form-switch">
+                      <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+                        <input className="form-check-input" onChange={(e) =>updateState(activity.id_activity,e.target)} type="checkbox" id={'check-' + activity.id_activity} />
+                      </label>
+                    </div>
+                  </td>
+                  /*<td><i className="fa-solid fa-xmark"></i></td>*/
+                )}
 
               </tr>
             ))}
           </tbody>
         </table>
       )}
+
     </div>
   )
 }

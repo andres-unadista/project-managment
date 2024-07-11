@@ -3,7 +3,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 import './App.css';
 //import { SessionProvider } from './context/SessionContext';
 import { AppRouter } from './routing/AppRouter';
-
+//import PiesChart from "../src/helpers/PiesChart";
 function App() {
  
 
@@ -11,7 +11,7 @@ function App() {
     <div className="App">
      
         <AppRouter />
-     
+        
      
 
     </div>

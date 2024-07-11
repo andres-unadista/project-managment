@@ -1,8 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {listActivities} from '../services/activitiesService'
-import {formateDate} from '../helpers/formateDate';
+//import {formateDate} from '../helpers/formateDate';
+
+import Chart from 'chart.js/auto';
+import { getRelativePosition } from 'chart.js/helpers';
 
 const ActivitiesList = () => {
+
     const [activities, setActivities] = useState([]);
     const [loading, setLoading] = useState(true);   
 
@@ -19,7 +23,44 @@ const ActivitiesList = () => {
         };
     
         fetchActivities();
+        //grafica();
       }, []);
+
+      
+        
+      useEffect(() => {
+
+        const data = {
+          labels: [
+            'Red',
+            'Blue',
+            'Yellow'
+          ],
+          datasets: [{
+            label: 'My First Dataset',
+            data: [300, 50, 100],
+            backgroundColor: [
+              'rgb(255, 99, 132)',
+              'rgb(54, 162, 235)',
+              'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+          }]
+        };
+        var ctx = document.getElementById('myDoughnutChart').getContext('2d');
+        var chart = new Chart(ctx, 
+          {
+          type: 'pie',
+          data: data
+          }
+        );
+      
+        // when component unmounts
+        return () => {
+            chart.destroy()
+          }
+        }, []);
+
 
       return (
         <div>
@@ -43,11 +84,11 @@ const ActivitiesList = () => {
               </thead>
               <tbody>
                 {activities.map((activity, index) => (
-                  <tr key={activity.id}>
+                  <tr key={index}>
                     <th scope="row">{index + 1}</th>
                     <td>{activity.name}</td>
-                    <td>{formateDate(activity.date_start)}</td>
-                    <td>{formateDate(activity.date_end)}</td>
+                    <td>{activity.date_start}</td>
+                    <td>{activity.date_end}</td>
                     
                     {activity.state == 1 ? (
                       <td><i className="fa-solid fa-check"></i></td> 
@@ -62,6 +103,10 @@ const ActivitiesList = () => {
               </tbody>
             </table>
           )}
+        
+
+        <canvas id="myDoughnutChart" width="200" height="200"></canvas>
+            
         </div>
       );
 }

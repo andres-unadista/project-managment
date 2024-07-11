@@ -5,7 +5,7 @@ import { createUser, updateUser } from '../services/usersService'; // Ajusta la 
 export const Users = () => {
 
   const [user, setUser] = useState(); //
-
+  const [formCreate, setformCreate]= useState(true); //
 
 
   const handleSaveUser = (e) => {
@@ -24,11 +24,13 @@ export const Users = () => {
   };
   const handleUdapteUser = (e) => {
     //e.preventDefault();
+   
     try {
       // Crear objeto con los datos del nuevo proyecto
       const form = document.getElementById('myForm');
       // Llamar al servicio para crear el proyecto en el backend
       updateUser(form,user.id);
+
 
       // Puedes implementar una función para recargar la lista de proyectos en ProjectList o usar un estado compartido si es necesario
     } catch (error) {
@@ -48,6 +50,7 @@ export const Users = () => {
 
     myModal.addEventListener('hidden.bs.modal', function () {
       // Limpiar los campos del formulario
+      setformCreate(true);
       setUser(null);
       myForm.querySelectorAll('input').forEach(input => {
         input.value = ''; // Establecer el valor del input a una cadena vacía
@@ -81,7 +84,7 @@ export const Users = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-            {user ? (
+            {(user && !formCreate)  ? (
               <h1 className="modal-title fs-5 justify-content-end" id="exampleModalLabel">Editar Usuario</h1>
             ) : (
               <h1 className="modal-title fs-5 justify-content-end" id="exampleModalLabel">Crear Usuario</h1>
@@ -151,7 +154,7 @@ export const Users = () => {
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                     <i className="fa-solid fa-rectangle-xmark"></i> Cerrar
                   </button>
-                  {user ? (
+                  {(user && !formCreate) ? (
                     <button type="button" className="btn btn-primary" onClick={handleUdapteUser}>
                      <i className="fa-solid fa-floppy-disk"></i> Actualizar
                     </button>
@@ -169,7 +172,7 @@ export const Users = () => {
           </div>
         </div>
       </div>
-      <UserList user={setUser} /> {/* Asumiendo que UserList se encarga de mostrar la lista de usuarios */}
+      <UserList user={ setUser } formCreate={ setformCreate }/> {/* Asumiendo que UserList se encarga de mostrar la lista de usuarios */}
      
     </div>
   );

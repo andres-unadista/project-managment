@@ -5,6 +5,7 @@ export const UserList = (props) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true); // Estado para indicar si se están cargando los datos
 
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -24,6 +25,7 @@ export const UserList = (props) => {
     
     console.log('Usuario clickeado',user);
     props.user(user);
+    props.formCreate(false);
     // Funcion para editar con Modal
     const btnAbrirModal = document.getElementById('btnUser');
      // Obtén una referencia al modal
@@ -74,7 +76,7 @@ export const UserList = (props) => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
-                <td><button type="button" className="btn btn-info" onClick={()=>abrirModal(user)}>Info</button></td>
+                <td><button type="button" className="btn" onClick={()=>abrirModal(user)}><i className="fa-solid fa-pencil"></i></button></td>
               </tr>
             ))}
           </tbody>

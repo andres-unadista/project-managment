@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Navigate } from 'react-router-dom';
 import { project } from '../services/projectService';
-import {formateDate} from '../helpers/formateDate';
+//import {formateDate} from '../helpers/formateDate';
 
 export const ProjectList = (props) => {
   const [projects, setProjects] = useState([]);
@@ -42,8 +42,10 @@ export const ProjectList = (props) => {
 
   const abrirModal = useCallback((project) => {
     
-    console.log('proyecto clickeado',project);
+
+    //console.log('proyecto clickeado',project);
     props.project(project);
+    props.formCreate(false);
     // Funcion para editar con Modal
     const btnAbrirModal = document.getElementById('btnProject');
      // Obtén una referencia al modal
@@ -69,7 +71,7 @@ export const ProjectList = (props) => {
               <th scope="col">Estado</th>
               <th scope="col">Detalle</th>
               <th scope="col">Editar</th>
-              <th scope="col">Eliminar</th>
+              
             </tr>
           </thead>
           <tbody>
@@ -80,13 +82,13 @@ export const ProjectList = (props) => {
               <tr key={project.id}>
                 <th scope="row">{index + 1}</th>
                 <td>{project.name}</td>
-                <td>{formateDate(project.date_start)}</td>
-                <td>{formateDate(project.date_end)}</td>
-                <td>{statusproject(project.state)}</td>
+                <td>{(project.date_start)}</td>
+                <td>{(project.date_end)}</td>
+                <td>{(project.state)}</td>
                 
-                <td><button type="button" className="btn btn-info" onClick={()=>clickProject(project.id)}  >Info</button></td>
-                <td><button type="button" className="btn btn-info" onClick={()=>abrirModal(project)}>Editar</button></td>
-                <td>Eliminar</td>
+                <td><button type="button" className="btn" onClick={()=>clickProject(project.id)}  ><i className="fa-solid fa-magnifying-glass"></i></button></td>
+                <td><button type="button" className="btn" onClick={()=>abrirModal(project)}><i className="fa-solid fa-pencil"></i></button></td>
+                
               </tr>
             ))}
           </tbody>

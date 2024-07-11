@@ -108,7 +108,32 @@ export const createUser = async function (newUser) {
     }
 
     const data = await response.json();
+    
+    Swal.fire({
+      title: 'Creacion de Usuario',
+      text: '¡Usuario Creado con Exito!',
+      icon: 'success',
+      showCancelButton: false,
+      confirmButtonText: 'Sí, continuar',
+      //cancelButtonText: 'Cancelar'
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Aquí capturas el evento de clic en el botón "OK" (confirmButtonText)
+
+        console.log('Has hecho clic en "Sí, continuar"');
+        // Puedes ejecutar más código aquí después de hacer clic en "OK"
+        setTimeout(() => {
+          window.location.href = '/proyectos';
+        }, 2000);
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        console.log('Has cancelado la acción');
+      }
+    });
+
     console.log('Respuesta recibida:', data);
+
     return data; // Devolvemos los datos obtenidos para que el componente los pueda usar
   } catch (error) {
     console.error('Error al crear usuarios nuevos:', error);
@@ -121,6 +146,10 @@ export const updateUser = async function (newUser, id_user) {
   try {
     const token = localStorage.getItem("jwt");
     const formData = new FormData(newUser);
+    if (formData.get('password')===''){
+        formData.delete('password');
+    }
+    
    // console.log(newUser);
     const response = await fetch('http://jwt.local:8012/api/user/edit/' + id_user, {
       method: 'POST',

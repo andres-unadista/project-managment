@@ -1,7 +1,7 @@
 // Funcion para litar projectos
 import Swal from 'sweetalert2';
 
-import { formatDateToCustomFormat } from '../helpers/formateDate'
+//import { formatDateToCustomFormat } from '../helpers/formateDate'
 export const project = async function () {
   try {
     const token = localStorage.getItem("jwt");
@@ -143,10 +143,11 @@ export const updateProject = async function (updateProject, id) {
 
         console.log('Has hecho clic en "Sí, continuar"');
         // Puedes ejecutar más código aquí después de hacer clic en "OK"
+        
         setTimeout(() => {
           window.location.href = '/proyectos';
         }, 1000);
-
+       
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         console.log('Has cancelado la acción');
       }
@@ -155,7 +156,7 @@ export const updateProject = async function (updateProject, id) {
 
     return data; // Devolvemos los datos obtenidos para que el componente los pueda usar
   } catch (error) {
-    console.error('Error al actualizar projecto:', error);
+    console.error('Error al actualizar proyecto:', error);
     throw error; // Propagamos el error para que el componente lo pueda manejar
   }
 };
