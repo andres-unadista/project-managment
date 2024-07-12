@@ -117,9 +117,18 @@ body {
 }
 
 /*Estilos Graficas*/
-#myDoughnutChart{
+#myDoughnutChart, #myDoughnutChart2{
 
-width: 50% !important;
+width: 40% !important;
 height: 50% !important;
 margin: auto;
+display: inline-block;
+}
+
+.charts{
+  display: flex;
+}
+
+.card-img-top{
+  height: 250px !important;
 }

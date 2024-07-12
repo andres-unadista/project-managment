@@ -12,11 +12,11 @@ export const ProjectActivities = () => {
 
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true); // Estado para indicar si se están cargando los datos
-
   const [activity, setActivity] = useState(null);
   const [formCreate, setformCreate] = useState(true); // 
-
   const [sizeActivity, setSizeActivity] = useState({activitiesFinish:0,activitiesInProces:0}); //
+
+  const [percentChart,setPercentChart]= useState({});
 
 
   useEffect(() => {
@@ -25,17 +25,6 @@ export const ProjectActivities = () => {
         const activitiesData = await projectActivities(); // Llamada al servicio para obtener la lista de usuarios
         setActivities(activitiesData.activities); // Almacenar la lista de actividades
         setLoading(false); // Cambiar el estado de carga a falso una vez que se han cargado los datos
-        
-       /*
-        console.log(activities,'Hola Mundo');
-        const finishActivities = activities.filter((activity) => activity.state_activity==1).length;
-        
-        const inProcesActivities =activities.filter((activity) => activity.state_activity==0).length;
-        setSizeActivity({activitiesFinish:finishActivities,activitiesInProces:inProcesActivities});
-
-        console.log(finishActivities,inProcesActivities);
-        */
-       
 
       } catch (error) {
         console.error('Error activities for projects:', error);
@@ -142,21 +131,46 @@ export const ProjectActivities = () => {
     const finishActivities = activities.filter((activity) => activity.state_activity==1).length;
     const inProcesActivities =activities.filter((activity) => activity.state_activity==0).length;
     setSizeActivity({activitiesFinish:finishActivities,activitiesInProces:inProcesActivities});
-    console.log(finishActivities,inProcesActivities);
+    //console.log(finishActivities,inProcesActivities);
+    
+    const project= JSON.parse(localStorage.getItem('project'));
+    
+    const date1 = new Date(project.date_start);
+    const date2 = new Date(project.date_end);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))+1; 
+    //console.log(diffTime + " milliseconds");
+    //console.log(diffDays + " days");
+
+    // fecha Actual
+    const fecha = new Date();
+    const año = fecha.getFullYear();
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript son indexados desde 0
+    const día = String(fecha.getDate()).padStart(2, '0'); // Obtener el día y añadir un cero inicial si es necesario
+    // Formatear la fecha en "AAAA-MM-DD"
+    const fechaActual = `${año}-${mes}-${día}`;
+
+    
+    const dateNow = new Date(fechaActual);
+    const diffTimeNow = Math.abs(dateNow - date1);
+    const diffDaysNow = Math.floor(diffTimeNow / (1000 * 60 * 60 * 24))+1; 
+    //console.log(diffTime + " milliseconds");
+    console.log(diffDaysNow + "Diferencia en Dias con respecto a la fecha Actual");
+
+    const percentNow = ((diffDaysNow*100)/diffDays).toFixed(2);
+    const percentPending = (100-percentNow).toFixed(2);
+
+    setPercentChart({percentNow,percentPending});
+    //console.log(percentNow.toFixed(2), percentPending.toFixed(2));
+
+
+
 
   }, [activities]);
 
   // Grafica
   useEffect(() => {
-/*
-    console.log(activities,'Hola Mundo');
-    const finishActivities = activities.filter((activity) => activity.state_activity == 1).length;
-    
-    const inProcesActivities =activities.filter((activity) => activity.state_activity == 0).length;
-    setSizeActivity({activitiesFinish:finishActivities,activitiesInProces:inProcesActivities});
 
-    console.log(finishActivities,inProcesActivities);
-*/
     const data = {
       labels: [
         'Actividades Pendientes',
@@ -199,6 +213,50 @@ export const ProjectActivities = () => {
       }
     }, [sizeActivity]);
 
+  // Grafica Percent
+  useEffect(() => {
+
+    const data = {
+      labels: [
+        'Tiempo Faltante',
+        'Tiempo Transcurrido'
+      ],
+      datasets: [{
+        label: 'Tiempo de Ejecución',
+        data: [percentChart.percentPending,percentChart.percentNow],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(40, 167, 69)'
+        ],
+        hoverOffset: 4
+      }]
+    };
+    var ctx = document.getElementById('myDoughnutChart2').getContext('2d');
+    var chart = new Chart(ctx, 
+      {
+      type: 'pie',
+      data: data,
+      options: {
+        plugins: {
+            legend: {
+                labels: {
+                    // This more specific font property overrides the global property
+                    font: {
+                        size: 16
+                    }
+                }
+            }
+        }
+    }
+
+      }
+    );
+  
+    // when component unmounts
+    return () => {
+        chart.destroy()
+      }
+    }, [percentChart]);
 
 
   return (
@@ -380,9 +438,10 @@ export const ProjectActivities = () => {
         </table>
         </div>
       )}
-
-      <canvas id="myDoughnutChart" width="200px" height="200px"></canvas>
-
+      <div className='charts'>
+        <canvas id="myDoughnutChart" width="200px" height="200px"></canvas>
+        <canvas id="myDoughnutChart2" width="200px" height="200px"></canvas>
+      </div>
     </div>
   )
 }

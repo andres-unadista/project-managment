@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {listActivities} from '../services/activitiesService'
 //import {formateDate} from '../helpers/formateDate';
 
-import Chart from 'chart.js/auto';
+
 
 
 const ActivitiesList = () => {
@@ -28,38 +28,7 @@ const ActivitiesList = () => {
 
       
         
-      useEffect(() => {
-
-        const data = {
-          labels: [
-            'Red',
-            'Blue',
-            'Yellow'
-          ],
-          datasets: [{
-            label: 'My First Dataset',
-            data: [300, 50, 100],
-            backgroundColor: [
-              'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)',
-              'rgb(255, 205, 86)'
-            ],
-            hoverOffset: 4
-          }]
-        };
-        var ctx = document.getElementById('myDoughnutChart').getContext('2d');
-        var chart = new Chart(ctx, 
-          {
-          type: 'pie',
-          data: data
-          }
-        );
-      
-        // when component unmounts
-        return () => {
-            chart.destroy()
-          }
-        }, []);
+   
 
 
       return (
@@ -105,7 +74,7 @@ const ActivitiesList = () => {
           )}
         
 
-        <canvas id="myDoughnutChart" width="200" height="200"></canvas>
+       
             
         </div>
       );
