@@ -3,9 +3,9 @@ import { projectActivities } from '../services/projectService'
 //import { formateDate } from '../helpers/formateDate'
 import { userlist } from "../services/usersService";
 import { createActivity, updateActivity, updateStateActivity } from "../services/activitiesService";
-//import { DateFormat, formatDateToCustomFormat } from "../helpers/formateDate";
+import {statusproject} from '../helpers/statusProjects';
 
-
+import Chart from 'chart.js/auto';
 
 
 export const ProjectActivities = () => {
@@ -16,13 +16,27 @@ export const ProjectActivities = () => {
   const [activity, setActivity] = useState(null);
   const [formCreate, setformCreate] = useState(true); // 
 
+  const [sizeActivity, setSizeActivity] = useState({activitiesFinish:0,activitiesInProces:0}); //
+
 
   useEffect(() => {
     const fetchActivities = async () => {
       try {
         const activitiesData = await projectActivities(); // Llamada al servicio para obtener la lista de usuarios
-        setActivities(activitiesData.activities); // Almacenar la lista de usuarios en el estado local
+        setActivities(activitiesData.activities); // Almacenar la lista de actividades
         setLoading(false); // Cambiar el estado de carga a falso una vez que se han cargado los datos
+        
+       /*
+        console.log(activities,'Hola Mundo');
+        const finishActivities = activities.filter((activity) => activity.state_activity==1).length;
+        
+        const inProcesActivities =activities.filter((activity) => activity.state_activity==0).length;
+        setSizeActivity({activitiesFinish:finishActivities,activitiesInProces:inProcesActivities});
+
+        console.log(finishActivities,inProcesActivities);
+        */
+       
+
       } catch (error) {
         console.error('Error activities for projects:', error);
         setLoading(false); // También cambiar el estado de carga en caso de error
@@ -121,6 +135,69 @@ export const ProjectActivities = () => {
     }
 
   };
+
+
+  useEffect(() => {
+    //console.log(activities,'Hola Mundo');
+    const finishActivities = activities.filter((activity) => activity.state_activity==1).length;
+    const inProcesActivities =activities.filter((activity) => activity.state_activity==0).length;
+    setSizeActivity({activitiesFinish:finishActivities,activitiesInProces:inProcesActivities});
+    console.log(finishActivities,inProcesActivities);
+
+  }, [activities]);
+
+  // Grafica
+  useEffect(() => {
+/*
+    console.log(activities,'Hola Mundo');
+    const finishActivities = activities.filter((activity) => activity.state_activity == 1).length;
+    
+    const inProcesActivities =activities.filter((activity) => activity.state_activity == 0).length;
+    setSizeActivity({activitiesFinish:finishActivities,activitiesInProces:inProcesActivities});
+
+    console.log(finishActivities,inProcesActivities);
+*/
+    const data = {
+      labels: [
+        'Actividades Pendientes',
+        'Actividades Finalizadas'
+      ],
+      datasets: [{
+        label: 'Actividades',
+        data: [sizeActivity.activitiesInProces, sizeActivity.activitiesFinish],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(40, 167, 69)'
+        ],
+        hoverOffset: 4
+      }]
+    };
+    var ctx = document.getElementById('myDoughnutChart').getContext('2d');
+    var chart = new Chart(ctx, 
+      {
+      type: 'pie',
+      data: data,
+      options: {
+        plugins: {
+            legend: {
+                labels: {
+                    // This more specific font property overrides the global property
+                    font: {
+                        size: 16
+                    }
+                }
+            }
+        }
+    }
+
+      }
+    );
+  
+    // when component unmounts
+    return () => {
+        chart.destroy()
+      }
+    }, [sizeActivity]);
 
 
 
@@ -248,6 +325,10 @@ export const ProjectActivities = () => {
       {loading ? (
         <p>Cargando Actividades...</p>
       ) : (
+        <div>
+        <h3>{JSON.parse(localStorage.getItem('project')).name}</h3>
+        <p>{JSON.parse(localStorage.getItem('project')).date_start +' AL '+JSON.parse(localStorage.getItem('project')).date_end}</p>
+        <p>{statusproject(JSON.parse(localStorage.getItem('project')).state)}</p>
         <table className="table">
           <thead className="thead-dark">
             <tr>
@@ -270,7 +351,6 @@ export const ProjectActivities = () => {
                 <td>{activity.activity}</td>
                 <td>{activity.date_start}</td>
                 <td>{activity.date_end}</td>
-
                 <td>{activity.user_name}</td>
                 <td><button type="button" className="btn btn" onClick={() => abrirModal(activity)}><i className="fa-solid fa-pencil"></i></button></td>
                 {activity.state_activity == 1 ? (
@@ -298,7 +378,10 @@ export const ProjectActivities = () => {
             ))}
           </tbody>
         </table>
+        </div>
       )}
+
+      <canvas id="myDoughnutChart" width="200px" height="200px"></canvas>
 
     </div>
   )

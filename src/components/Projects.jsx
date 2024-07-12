@@ -71,11 +71,11 @@ export const Projects = () => {
       // Manejar el error apropiadamente, como mostrar un mensaje de error al usuario
     }
   };
-
+/*
   const handleOpenModal = (proj) => {
     setProject(proj ? proj : null); // Si hay proyecto, lo establece; si no, lo establece en null
   };
-
+*/
  
 
   return (
@@ -174,7 +174,7 @@ export const Projects = () => {
                       Estado del Proyecto
                     </label>
                   </div>
-                  <select className="custom-select" name="state" id="state"   value={project?.state || ''}  onChange={(e) => setProject({ ...project, state: e.target.value })}>
+                  <select className="custom-select" name="state" id="state" value={project?.state || ''}  onChange={(e) => setProject({ ...project, state: e.target.value })}>
                     <option value="1">Ejecución</option>
                     <option value="2">Cancelado</option>
                     <option value="3">Finalizado</option>

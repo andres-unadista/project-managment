@@ -3,7 +3,7 @@ import {listActivities} from '../services/activitiesService'
 //import {formateDate} from '../helpers/formateDate';
 
 import Chart from 'chart.js/auto';
-import { getRelativePosition } from 'chart.js/helpers';
+
 
 const ActivitiesList = () => {
 

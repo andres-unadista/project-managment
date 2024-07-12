@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Navigate } from 'react-router-dom';
+import { json, Navigate } from 'react-router-dom';
 import { project } from '../services/projectService';
+import {statusproject} from '../helpers/statusProjects'
 //import {formateDate} from '../helpers/formateDate';
 
 export const ProjectList = (props) => {
@@ -22,23 +23,19 @@ export const ProjectList = (props) => {
     fetchProjects();
   }, []);
 
-  const clickProject = useCallback((id_project) => {
-    localStorage.setItem("id_project", id_project);
-    console.log('Botón clickeado',id_project);
+  const clickProject = useCallback(({id,name,date_start,date_end,state}) => {
+    localStorage.setItem("id_project", id);
+
+    localStorage.setItem("project", JSON.stringify({name,date_start,date_end,state}));
+   
+
+    console.log('Botón clickeado',id);
    {/* <Navigate to="/proy-acti" />*/}
     window.location.href = '/proy-acti';
 
   }, []);
 
-  const statusproject = (status) => {
-    let icons = {1: '<i class="fa-solid fa-arrow-right"></i>', 2: '<i class="fa-solid fa-ban"></i>',3: '<i class="fa-solid fa-check-to-slot"></i>' }
 
-      return (
-        <React.Fragment>
-          <div dangerouslySetInnerHTML={{ __html: icons[status] }} />
-        </React.Fragment>
-      )
-  }
 
   const abrirModal = useCallback((project) => {
     
@@ -61,6 +58,9 @@ export const ProjectList = (props) => {
       {loading ? (
         <p>Cargando proyectos...</p>
       ) : (
+        <div>
+         <h2>{}</h2>
+        
         <table className="table">
           <thead className="thead-dark">
             <tr>
@@ -84,15 +84,16 @@ export const ProjectList = (props) => {
                 <td>{project.name}</td>
                 <td>{(project.date_start)}</td>
                 <td>{(project.date_end)}</td>
-                <td>{(project.state)}</td>
+                <td>{statusproject(project.state)}</td>
                 
-                <td><button type="button" className="btn" onClick={()=>clickProject(project.id)}  ><i className="fa-solid fa-magnifying-glass"></i></button></td>
+                <td><button type="button" className="btn" onClick={()=>clickProject(project)}  ><i className="fa-solid fa-magnifying-glass"></i></button></td>
                 <td><button type="button" className="btn" onClick={()=>abrirModal(project)}><i className="fa-solid fa-pencil"></i></button></td>
                 
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

@@ -115,3 +115,11 @@ body {
   justify-content: flex-end;
   padding: 20px;
 }
+
+/*Estilos Graficas*/
+#myDoughnutChart{
+
+width: 50% !important;
+height: 50% !important;
+margin: auto;
+}
