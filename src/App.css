@@ -6,17 +6,24 @@ body {
   background-color: white;
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
+  padding: 0;
+  margin: 0;
 }
 
 
 .header-nav nav {
-  background-color: rgb(167, 230, 255);
+  background-color: #0077b6;
   height: 80px;
   color: white;
   display: flex;
   align-items: center;
   padding-right: 35px;
   padding-left: 35px;
+  
+}
+.footer {
+  background-color: #0077b6;
+  color: white;
 }
 
 .header-nav nav ul {
@@ -24,6 +31,7 @@ body {
   display: flex;
   justify-content: flex-end;
   flex-basis: 75%;
+  margin-top: 15px;
 }
 
 .header-nav a {
@@ -33,7 +41,7 @@ body {
   margin-left: 10px;
 }
 .header-nav a:hover {
-  color: rgb(20, 134, 195);
+  color: #caf0f8;
 }
 
 .container {
@@ -41,7 +49,7 @@ body {
   text-align: center;
   width: 70%;
   min-height: 350px;
-  background-color: aliceblue;
+  background-color: #caf0f8;
   border-radius: 15px;
   border: 1px solid rgb(167, 230, 255);
   margin: 15px auto;
@@ -114,6 +122,29 @@ body {
   display: flex;
   justify-content: flex-end;
   padding: 20px;
+  
+}
+.btn-success{
+  background-color: #00b4d8 !important;
+  border-radius: 4px !important;
+  border: 1px solid #0077b6 !important;
+
+ 
+}
+
+.btn-success:focus, .btn-success.focus {
+  box-shadow: none !important; 
+  outline: none !important; 
+}
+.btn-success:checked {
+    background-color: inherit !important; 
+    color: inherit !important; 
+    border-color: inherit !important; 
+    box-shadow: none !important;
+}
+.btn-success:hover{
+  background-color: #0077b6 !important;
+
 }
 
 /*Estilos Graficas*/

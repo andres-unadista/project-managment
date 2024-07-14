@@ -204,11 +204,11 @@ export const Projects = () => {
                     <i className="fa-solid fa-rectangle-xmark"></i> Cerrar
                   </button>
                   {(project && !formCreate) ? (
-                      <button type="button" className="btn btn-primary" onClick={handleUpdateProject}>
+                      <button type="button" className="btn btn-success" onClick={handleUpdateProject}>
                       <i className="fa-solid fa-floppy-disk"></i> Actualizar
                     </button>
                   ) : (
-                    <button type="button" className="btn btn-primary" onClick={handleSaveProject}>
+                    <button type="button" className="btn btn-success" onClick={handleSaveProject}>
                     <i className="fa-solid fa-floppy-disk"></i> Guardar
                   </button>
                   )}

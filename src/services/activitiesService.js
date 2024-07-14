@@ -79,6 +79,12 @@ export const listActivities = async function () {
       console.log('Respuesta recibida:', data);
       return data; // Devolvemos los datos obtenidos para que el componente los pueda usar
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Validar los campos del formulario!"
+        
+      });
       console.error('Error al crear Actividad:', error);
       throw error; // Propagamos el error para que el componente lo pueda manejar
     }

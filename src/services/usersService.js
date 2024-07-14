@@ -35,10 +35,12 @@ export const login = function (form) {
           // Aquí capturas el evento de clic en el botón "OK" (confirmButtonText)
 
           console.log('Has hecho clic en "Sí, continuar"');
+          localStorage.setItem("statusSession",true);
           // Puedes ejecutar más código aquí después de hacer clic en "OK"
           setTimeout(() => {
             window.location.href = '/';
           }, 2000);
+
 
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           console.log('Has cancelado la acción');
@@ -124,7 +126,7 @@ export const createUser = async function (newUser) {
         console.log('Has hecho clic en "Sí, continuar"');
         // Puedes ejecutar más código aquí después de hacer clic en "OK"
         setTimeout(() => {
-          window.location.href = '/proyectos';
+          window.location.href = '/usuarios';
         }, 2000);
 
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -136,6 +138,12 @@ export const createUser = async function (newUser) {
 
     return data; // Devolvemos los datos obtenidos para que el componente los pueda usar
   } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Validar los campos del formulario!"
+      
+    });
     console.error('Error al crear usuarios nuevos:', error);
     throw error; // Propagamos el error para que el componente lo pueda manejar
   }

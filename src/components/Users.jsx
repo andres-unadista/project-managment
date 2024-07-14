@@ -155,11 +155,11 @@ export const Users = () => {
                     <i className="fa-solid fa-rectangle-xmark"></i> Cerrar
                   </button>
                   {(user && !formCreate) ? (
-                    <button type="button" className="btn btn-primary" onClick={handleUdapteUser}>
+                    <button type="button" className="btn btn-success" onClick={handleUdapteUser}>
                      <i className="fa-solid fa-floppy-disk"></i> Actualizar
                     </button>
                   ) : (
-                    <button type="button" className="btn btn-primary" onClick={handleSaveUser}>
+                    <button type="button" className="btn btn-success" onClick={handleSaveUser}>
                     <i className="fa-solid fa-floppy-disk"></i> Guardar
                     </button>
                   )}

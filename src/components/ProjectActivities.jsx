@@ -364,11 +364,11 @@ export const ProjectActivities = () => {
                   </button>
 
                   {(activity && !formCreate) ? (
-                    <button type="button" className="btn btn-primary" onClick={handleUpdateActivity}>
+                    <button type="button" className="btn btn-success" onClick={handleUpdateActivity}>
                       <i className="fa-solid fa-floppy-disk"></i> Actualizar
                     </button>
                   ) : (
-                    <button type="button" className="btn btn-primary" onClick={handleSaveActivity}>
+                    <button type="button" className="btn btn-success" onClick={handleSaveActivity}>
                       <i className="fa-solid fa-floppy-disk"></i> Guardar
                     </button>
                   )}

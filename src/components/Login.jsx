@@ -1,21 +1,24 @@
-import React  from 'react';
+import React, {useEffect}  from 'react';
 //import { Context } from '../context/Context';
 import {login} from '../services/usersService.js'
 
 
-
-
-
-export const Login = () => {
+export const Login = (props) => {
 
   const access = (e) => {
+
+    //console.log(props);
     e.preventDefault(); // Evitar que se actualice la pag
     login(e.target);
-    console.log(e.target);
-
+    //console.log(e.target);
+    props.statusSession(true);
+    
 
 
   };
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
 
   
   

@@ -72,11 +72,14 @@ export const createProject = async function (newProject) {
       }
     });
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+
 
     const data = await response.json();
+    if (!response.ok) {
+      console.log('Petición Fallida:', data)
+      throw new Error('Network response was not ok');
+      
+    }
     console.log('Respuesta recibida:', data);
     Swal.fire({
       title: 'Creacion de Proyecto',
@@ -103,7 +106,14 @@ export const createProject = async function (newProject) {
     return data; // Devolvemos los datos obtenidos para que el componente los pueda usar
   } catch (error) {
     console.error('Error al crear Proyectos nuevos:', error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Validar los campos del formulario!"
+      
+    });
     throw error; // Propagamos el error para que el componente lo pueda manejar
+    
   }
 };
 

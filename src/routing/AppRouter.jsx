@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,6 +10,7 @@ import { Home } from "../components/Home";
 import { Projects } from "../components/Projects";
 import { NotFound } from "../components/NotFound";
 import { Login } from "../components/Login";
+import { Logout } from "../components/Logout";
 import { Users } from "../components/Users";
 import { Activities } from "../components/Activities";
 import logo from "../assets/project-managment.png";
@@ -18,9 +19,16 @@ import { ProjectActivities } from "../components/ProjectActivities";
 
 export const AppRouter = () => {
 
-  //const { statusSession, setSessionStatus } = useContext(SessionContext);
+
+  const [ statusSession, setStatusSession ] = useState(false);
   
-  const statusSession = true;
+  useEffect(() => {
+    const session = localStorage.getItem("statusSession");
+    if(session){
+      setStatusSession(session);
+    }
+    console.log();
+  }, []);
 
   return (
     <div>
@@ -58,7 +66,7 @@ export const AppRouter = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/login">
+                <NavLink to="/logout">
                 <i className="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
                 </NavLink>
               </li>
@@ -83,7 +91,8 @@ export const AppRouter = () => {
             <Route path="/proyectos" element={<Projects />}></Route>
             <Route path="/proy-acti" element={<ProjectActivities />}></Route>
             <Route path="/actividades" element={<Activities />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route path="/login" element={<Login statusSession={setStatusSession} />}/>
+            <Route path="/logout" element={<Logout statusSession={setStatusSession} />}/>
             <Route path="/usuarios" element={<Users />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
