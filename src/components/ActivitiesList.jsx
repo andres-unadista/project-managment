@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {listActivities} from '../services/activitiesService'
 //import {formateDate} from '../helpers/formateDate';
+import alerta from '../assets/alerta_retrazo_01.gif';
 
 
 
@@ -26,6 +27,16 @@ const ActivitiesList = () => {
         //grafica();
       }, []);
 
+      const validateDays =(date2)=>{
+        const dateNow = new Date();
+        const dateFinish = new Date(date2);
+        const diffTimeNow = (dateFinish-dateNow);
+        
+        return diffTimeNow < 0
+
+      }
+      
+
       
         
    
@@ -46,9 +57,8 @@ const ActivitiesList = () => {
                   <th scope="col">Fecha Inicial</th>
                   <th scope="col">Fecha Final</th>
                   <th scope="col">Estado</th>
-                  <th scope="col">Detalle</th>
-                  <th scope="col">Editar</th>
-                  <th scope="col">Eliminar</th>
+                  <th scope="col">Actividades Atrasadas</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -64,9 +74,13 @@ const ActivitiesList = () => {
                     ) : (
                       <td><i className="fa-solid fa-xmark"></i></td> 
                     )}
-                    <td><button type="button" className="btn btn-info">Info</button></td>
-                    <td>Editar</td>
-                    <td>Eliminar</td>
+                    {activity.state == 0 && validateDays(activity.date_end) ? (
+                      <td><img src={alerta} width="17px" height="17px"/></td>
+                    ) : (
+                      <td></td>
+                    )}
+                    
+                   
                   </tr>
                 ))}
               </tbody>

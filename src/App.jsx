@@ -1,9 +1,11 @@
 import 'sweetalert2/src/sweetalert2.scss'
 
 import './App.css';
-//import { SessionProvider } from './context/SessionContext';
+
+
+
 import { AppRouter } from './routing/AppRouter';
-//import PiesChart from "../src/helpers/PiesChart";
+
 function App() {
 
 
@@ -17,8 +19,8 @@ function App() {
 
       </div>
       <footer className='text-center footer'>
-        <p>Plataforma de Gestión de Proyectos con Funcionalidades de Autenticación, Gestión de Proyectos y Seguimiento de Tareas
-        </p>
+      <br /><p><b>Plataforma de gestión de proyectos con funcionalidades de autenticación y seguimiento de tareas
+        </b></p>
         <p>Creador por:<br />
           Andrés Fernandez<br />
           Andrés Lozano<br />

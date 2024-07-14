@@ -20,6 +20,16 @@ export const Login = (props) => {
     console.log(props);
   }, [props]);
 
+  useEffect(() => {
+  	var element = document.querySelector("footer");
+	  element.classList.add("footer-status");
+
+   
+    return () => {
+      var element = document.querySelector("footer");
+      element.classList.remove("footer-status");
+    };
+  }, []);
   
   
 

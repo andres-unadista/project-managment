@@ -24,6 +24,19 @@ body {
 .footer {
   background-color: #0077b6;
   color: white;
+
+}
+.footer>p {
+  margin-bottom:0 ;
+  
+}
+.footer-status {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
 }
 
 .header-nav nav ul {
