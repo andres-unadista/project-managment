@@ -16,12 +16,9 @@ Sigue estos pasos para instalar y configurar el proyecto en tu entorno local:
 ### 1. **Clona el repositorio:**
    ```git clone https://github.com/andres-unadista/project-managment.git```
 ### 2. Navega al directorio del proyecto:
-```cd nombre_del_proyecto```
+```cd project-managment```
 
-### 3. Navega al directorio del proyecto:
-```cd nombre_del_proyecto```
-
-### 4. Instala las dependencias del proyecto:
+### 3. Instala las dependencias del proyecto:
 ```npm install```
 
 ## Desarrollo
