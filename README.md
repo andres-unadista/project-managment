@@ -13,13 +13,9 @@ Asegúrate de tener los siguientes requisitos instalados en tu máquina:
 
 Sigue estos pasos para instalar y configurar el proyecto en tu entorno local:
 
-###1. **Clona el repositorio:**
-
-   ```bash
-   git clone https://github.com/andres-unadista/project-managment.git
+### 1. **Clona el repositorio:**
+   ```git clone https://github.com/andres-unadista/project-managment.git```
 ### 2. Navega al directorio del proyecto:
-
-
 ```cd nombre_del_proyecto```
 
 ### 3. Navega al directorio del proyecto:
@@ -28,9 +24,9 @@ Sigue estos pasos para instalar y configurar el proyecto en tu entorno local:
 ### 4. Instala las dependencias del proyecto:
 ```npm install```
 
-##Desarrollo
+## Desarrollo
 Para iniciar el servidor de desarrollo y ver los cambios en tiempo real, ejecuta el siguiente comando:
 ```npm run dev```
 
-##Construcción para Producción
+## Construcción para Producción
 ```npm run build```
