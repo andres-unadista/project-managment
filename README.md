@@ -1,5 +1,4 @@
 # Plataforma de gestión de proyectos con funcionalidades de autenticación y seguimiento de tareas
-Descripción breve del proyecto, su propósito y características principales.
 
 ## Requisitos
 
